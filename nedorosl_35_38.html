@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>«Недоросль» — задания 35 и 38</title>
+<style>
+:root{
+  --paper:#EDEFF1; --sheet:#FFFFFF; --ink:#1D2129; --muted:#5B6270;
+  --curtain:#7A1E2C; --curtain-soft:#F3E4E6; --gold:#A8843A;
+  --ok:#2E6B46; --ok-bg:#E3F1E8; --bad:#A8261E; --bad-bg:#F8E3E1;
+  --line:#CDD2D9; --slug:#F7F4EC;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#15181D; --sheet:#1E232A; --ink:#E7E9EC; --muted:#9AA2AE;
+    --curtain:#D9707F; --curtain-soft:#3A2429; --gold:#D2B06A;
+    --ok:#7CC79A; --ok-bg:#1E3527; --bad:#F08A80; --bad-bg:#3D2220;
+    --line:#39414C; --slug:#2A2F37;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:"PT Serif",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;
+  padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+header{text-align:center;padding:26px 10px 18px;border-top:3px double var(--curtain);border-bottom:3px double var(--curtain);margin-bottom:22px}
+header h1{font-size:clamp(34px,7vw,56px);letter-spacing:.14em;margin:0;color:var(--curtain);font-weight:700;line-height:1.05}
+header p{margin:6px 0 0;color:var(--muted);font-style:italic}
+nav{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+nav button{font:inherit;border:1.5px solid var(--curtain);background:transparent;color:var(--curtain);padding:8px 18px;border-radius:999px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--curtain);color:#fff}
+button:focus-visible,input:focus-visible,.card:focus-visible,.col:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+section{display:none}
+section.active{display:block}
+.task{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:20px 22px;margin-bottom:18px}
+.task h2{margin:0 0 6px;font-size:22px}
+.task .how{color:var(--muted);margin:0;max-width:72ch}
+.row{background:var(--sheet);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:4px;padding:16px 18px;margin-bottom:12px}
+.row.ok{border-left-color:var(--ok)} .row.bad{border-left-color:var(--bad)}
+.row-head{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
+.letter{font-size:26px;font-weight:700;color:var(--curtain);min-width:1.2em}
+.row-head .hint{color:var(--muted);font-size:15px}
+.tiles{display:flex;flex-wrap:wrap;gap:7px}
+.tile{font:inherit;font-size:16px;background:var(--slug);color:var(--ink);border:1px solid var(--line);border-bottom-width:3px;border-radius:3px;padding:3px 10px;cursor:pointer}
+.tile sup{color:var(--gold);font-weight:700;margin-right:3px;font-size:11px}
+.tile.used{opacity:.28;cursor:default;border-bottom-width:1px}
+.build{min-height:48px;margin:12px 0 10px;padding:9px 12px;border:1.5px dashed var(--line);border-radius:4px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.build:empty::before{content:"Нажимай на слова по порядку — они появятся здесь";color:var(--muted);font-style:italic;font-size:15px}
+.build .tile{background:var(--curtain-soft);border-color:var(--curtain)}
+.meta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.order{font-size:15px;color:var(--muted)}
+.order b{color:var(--ink);letter-spacing:.04em}
+.term{display:flex;align-items:center;gap:8px}
+.term input{font:inherit;padding:6px 10px;border:1.5px solid var(--line);border-radius:4px;background:var(--sheet);color:var(--ink);width:200px}
+.actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.btn{font:inherit;font-size:15px;padding:6px 14px;border-radius:4px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.btn.main{background:var(--ink);color:var(--sheet)}
+.btn.quiet{border-color:var(--line);color:var(--muted)}
+.fb{margin-top:10px;font-size:15px;padding:8px 12px;border-radius:4px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);color:var(--ok)} .fb.bad{background:var(--bad-bg);color:var(--bad)}
+.fb .model{color:var(--ink);display:block;margin-top:4px}
+.total{position:sticky;bottom:0;background:var(--sheet);border:1px solid var(--line);border-top:3px double var(--curtain);border-radius:6px 6px 0 0;padding:12px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.total .score{font-size:18px;margin-right:auto}
+/* 38 */
+.pool{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:9px 12px 9px 10px;cursor:pointer;display:flex;gap:10px;font-size:15.5px;line-height:1.45;user-select:none}
+.card .n{font-weight:700;color:var(--gold);min-width:1.6em;text-align:right}
+.card.sel{border-color:var(--curtain);box-shadow:0 0 0 2px var(--curtain) inset;background:var(--curtain-soft)}
+.card.ok{border-color:var(--ok);background:var(--ok-bg)} .card.bad{border-color:var(--bad);background:var(--bad-bg)}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+@media (max-width:760px){.cols{grid-template-columns:1fr 1fr}}
+@media (max-width:440px){.cols{grid-template-columns:1fr}}
+.col{background:var(--sheet);border:1.5px solid var(--line);border-radius:4px;min-height:120px;padding:0 0 8px;cursor:pointer;display:flex;flex-direction:column}
+.col h3{margin:0;padding:9px 10px;font-size:17px;text-align:center;border-bottom:1px solid var(--line);color:var(--curtain)}
+.col.target{border-color:var(--curtain);border-style:dashed}
+.col .chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px}
+.chip{font:inherit;font-weight:700;font-size:15px;min-width:36px;padding:4px 8px;border-radius:3px;border:1px solid var(--line);background:var(--slug);color:var(--ink);cursor:pointer}
+.chip.sel{border-color:var(--curtain);background:var(--curtain-soft)}
+.chip.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.chip.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
+.col .empty{color:var(--muted);font-size:14px;font-style:italic;padding:4px 10px}
+.pool-title{font-size:16px;color:var(--muted);margin:0 0 8px}
+.detail{background:var(--curtain-soft);border-left:4px solid var(--curtain);padding:10px 14px;border-radius:0 4px 4px 0;margin-bottom:14px;font-size:15.5px;display:none}
+.detail.show{display:block}
+@media (prefers-reduced-motion:no-preference){.tile,.card,.chip{transition:background .15s,border-color .15s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="index.html" style="display:inline-block;margin-bottom:8px;color:var(--curtain);font-size:15px;text-decoration:none">← Ко всем заданиям</a>
+  <h1>НЕДОРОСЛЬ</h1>
+  <p>Д. И. Фонвизин · задания 35 и 38</p>
+</header>
+
+<nav role="tablist">
+  <button role="tab" aria-selected="true" data-tab="t35">Задание 35. Термины драмы</button>
+  <button role="tab" aria-selected="false" data-tab="t38">Задание 38. Герои комедии</button>
+</nav>
+
+<!-- ========== 35 ========== -->
+<section id="t35" class="active">
+  <div class="task">
+    <h2>Собери определения</h2>
+    <p class="how">Нажимай на слова в нужном порядке — из них сложится определение, а номера слов запишутся сами. Слово в собранной строке можно убрать нажатием. Затем впиши название литературоведческого термина, связанного с драматическим произведением.</p>
+  </div>
+  <div id="rows35"></div>
+  <div class="total">
+    <span class="score" id="score35">Проверено: 0 из 10</span>
+    <button class="btn main" id="checkAll35">Проверить всё</button>
+    <button class="btn quiet" id="reset35">Начать заново</button>
+  </div>
+</section>
+
+<!-- ========== 38 ========== -->
+<section id="t38">
+  <div class="task">
+    <h2>Кому принадлежит характеристика?</h2>
+    <p class="how">Выбери характеристику, а потом нажми на колонку с именем героя. На компьютере карточку можно просто перетащить. Номер в колонке можно выбрать и перенести в другую колонку или вернуть в список.</p>
+  </div>
+  <div class="cols" id="cols38"></div>
+  <div class="detail" id="detail38"></div>
+  <p class="pool-title" id="poolTitle">Характеристики (осталось: 20)</p>
+  <div class="pool" id="pool38"></div>
+  <div class="total">
+    <span class="score" id="score38">Распредели все 20 характеристик</span>
+    <button class="btn main" id="check38">Проверить</button>
+    <button class="btn" id="show38">Показать ответы</button>
+    <button class="btn quiet" id="reset38">Начать заново</button>
+  </div>
+</section>
+</div>
+
+<script>
+/* ---------- tabs ---------- */
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('active',s.id===b.dataset.tab));
+}));
+
+const norm = s => s.toLowerCase().replace(/ё/g,'е').replace(/[^а-яa-z ]/g,' ').replace(/\s+/g,' ').trim();
+
+/* ================= ЗАДАНИЕ 35 ================= */
+function perms(a){ if(a.length<=1) return [a]; return a.flatMap((x,i)=>perms(a.filter((_,j)=>j!==i)).map(p=>[x,...p])); }
+
+const kAdj = perms(['живописное','объёмное','архитектурное']).map(p=>[p[0],p[1],'или',p[2]]);
+const kTail = [
+  ['изображение','места','сценического','действия','устанавливаемое','на','сцене','и','обстановки','съёмочной','площадки'],
+  ['изображение','места','сценического','действия','и','обстановки','съёмочной','площадки','устанавливаемое','на','сцене']
+];
+
+const T35 = [
+ {id:'А', words:['часть','пьесы','законченная','спектакля'],
+  answers:[['законченная','часть','пьесы','спектакля'],['законченная','часть','спектакля','пьесы']],
+  model:'Законченная часть пьесы (спектакля)', terms:['действие','акт'], term:'Действие (акт)'},
+ {id:'Б', words:['действие','что','то','же'],
+  answers:[['то','же','что','действие']],
+  model:'То же, что действие', terms:['акт'], term:'Акт'},
+ {id:'В', words:['состав','часть','не','акта','в','лиц','которой','меняется','действующих'],
+  answers:[['часть','акта','в','которой','не','меняется','состав','действующих','лиц']],
+  model:'Часть акта, в которой не меняется состав действующих лиц', terms:['явление','сцена'], term:'Явление (сцена)'},
+ {id:'Г', words:['обстановки','автора','к','лиц','касающееся','их','вида','пояснение','поведения','действующих','внешнего','тексту'],
+  answers:[
+   ['пояснение','автора','к','тексту','касающееся','обстановки','поведения','действующих','лиц','их','внешнего','вида'],
+   ['пояснение','автора','к','тексту','касающееся','поведения','действующих','лиц','их','внешнего','вида','обстановки']],
+  model:'Пояснение автора к тексту, касающееся обстановки, поведения действующих лиц, их внешнего вида', terms:['ремарка','ремарки'], term:'Ремарка'},
+ {id:'Д', words:['произведений','исполнения','род','форме','и','литературных','предназначенных','написанных','для','на','диалогической','сцене','актёрами','в'],
+  answers:[
+   ['род','литературных','произведений','написанных','в','диалогической','форме','и','предназначенных','для','исполнения','актёрами','на','сцене'],
+   ['род','литературных','произведений','написанных','в','диалогической','форме','и','предназначенных','для','исполнения','на','сцене','актёрами']],
+  model:'Род литературных произведений, написанных в диалогической форме и предназначенных для исполнения актёрами на сцене', terms:['драма','драматургия'], term:'Драма'},
+ {id:'Е', words:['представление','театральное'],
+  answers:[['театральное','представление']],
+  model:'Театральное представление', terms:['спектакль'], term:'Спектакль'},
+ {id:'Ж', words:['обмен','между','репликами','разговор','двумя','лицами'],
+  answers:[['разговор','между','двумя','лицами','обмен','репликами'],['обмен','репликами','разговор','между','двумя','лицами']],
+  model:'Разговор между двумя лицами, обмен репликами', terms:['диалог'], term:'Диалог'},
+ {id:'З', words:['произведение','сцене','литературное','на','предназначенное','постановки','для'],
+  answers:[['литературное','произведение','предназначенное','для','постановки','на','сцене']],
+  model:'Литературное произведение, предназначенное для постановки на сцене', terms:['пьеса'], term:'Пьеса'},
+ {id:'И', words:['слушателям','речь','к','себе','лица','обращённая','к','самому','одного','или'],
+  answers:[
+   ['речь','одного','лица','обращённая','к','самому','себе','или','к','слушателям'],
+   ['речь','одного','лица','обращённая','к','слушателям','или','к','самому','себе']],
+  model:'Речь одного лица, обращённая к самому себе или к слушателям', terms:['монолог'], term:'Монолог'},
+ {id:'К', words:['действия','на','съёмочной','площадки','устанавливаемое','сцене','или','обстановки','живописное','объёмное','сценического','архитектурное','места','изображение','и'],
+  answers: kAdj.flatMap(a=>kTail.map(t=>[...a,...t])),
+  model:'Живописное, объёмное или архитектурное изображение места сценического действия, устанавливаемое на сцене, и обстановки съёмочной площадки', terms:['декорация','декорации'], term:'Декорация', loose:true}
+];
+
+const state35 = T35.map(()=>({seq:[], checked:false, ok:false}));
+const rowsEl = document.getElementById('rows35');
+
+function render35(){
+  rowsEl.innerHTML='';
+  T35.forEach((t,i)=>{
+    const st=state35[i];
+    const row=document.createElement('div');
+    row.className='row'+(st.checked?(st.ok?' ok':' bad'):'');
+    row.innerHTML=`<div class="row-head"><span class="letter">${t.id}</span><span class="hint">${t.words.length} ${plural(t.words.length)}</span></div>`;
+    const tiles=document.createElement('div'); tiles.className='tiles';
+    t.words.forEach((w,wi)=>{
+      const b=document.createElement('button'); b.className='tile'+(st.seq.includes(wi)?' used':'');
+      b.innerHTML=`<sup>${wi+1}</sup>${w}`; b.disabled=st.seq.includes(wi);
+      b.onclick=()=>{st.seq.push(wi); st.checked=false; render35(); focusBack(i,'b',st.seq.length-1)};
+      tiles.appendChild(b);
+    });
+    row.appendChild(tiles);
+    const build=document.createElement('div'); build.className='build';
+    st.seq.forEach((wi,k)=>{
+      const b=document.createElement('button'); b.className='tile';
+      b.textContent=k===0?cap(t.words[wi]):t.words[wi]; b.title='Убрать слово';
+      b.onclick=()=>{st.seq.splice(k,1); st.checked=false; render35();};
+      build.appendChild(b);
+    });
+    row.appendChild(build);
+    const meta=document.createElement('div'); meta.className='meta';
+    meta.innerHTML=`<span class="order">Порядок: <b>${st.seq.length?st.seq.map(x=>x+1).join('–'):'—'}</b></span>
+      <label class="term">Термин: <input type="text" value="${st.term||''}" autocomplete="off" spellcheck="false"></label>
+      <span class="actions"><button class="btn quiet" data-a="undo">Отменить</button><button class="btn main" data-a="check">Проверить</button></span>`;
+    row.appendChild(meta);
+    const inp=meta.querySelector('input');
+    inp.oninput=()=>{st.term=inp.value; st.checked=false; row.className='row'; fb.className='fb';};
+    inp.onkeydown=e=>{if(e.key==='Enter') check35(i,true)};
+    meta.querySelector('[data-a=undo]').onclick=()=>{st.seq.pop(); st.checked=false; render35();};
+    meta.querySelector('[data-a=check]').onclick=()=>check35(i,true);
+    const fb=document.createElement('div'); fb.className='fb';
+    if(st.checked){ fb.className='fb show '+(st.ok?'ok':'bad'); fb.innerHTML=st.msg; }
+    row.appendChild(fb);
+    rowsEl.appendChild(row);
+  });
+  const done=state35.filter(s=>s.checked).length, right=state35.filter(s=>s.checked&&s.ok).length;
+  document.getElementById('score35').textContent = done? `Верно: ${right} из 10 (проверено ${done})` : 'Проверено: 0 из 10';
+}
+function focusBack(){}
+function plural(n){return n%10===1&&n%100!==11?'слово':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'слова':'слов')}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+function check35(i,rerender){
+  const t=T35[i], st=state35[i];
+  const built=st.seq.map(x=>t.words[x]);
+  const complete = built.length===t.words.length;
+  const orderOk = complete && t.answers.some(a=>a.join(' ')===built.join(' '));
+  const termOk = t.terms.includes(norm(st.term||''));
+  st.checked=true; st.ok=orderOk&&termOk;
+  let m=[];
+  if(!complete) m.push(`Использованы не все слова (${built.length} из ${t.words.length}).`);
+  else m.push(orderOk?'Определение собрано верно.':(t.loose?'Порядок слов отличается от образца — сравни (здесь возможны варианты).':'Порядок слов неверный.'));
+  m.push(termOk?`Термин верный: ${t.term}.`:(st.term?'Термин неверный.':'Термин не вписан.'));
+  if(!st.ok) m.push(`<span class="model"><b>Образец:</b> ${t.model} — <b>${t.term}</b></span>`);
+  st.msg=m.join(' ');
+  if(rerender) render35();
+}
+document.getElementById('checkAll35').onclick=()=>{T35.forEach((_,i)=>check35(i,false)); render35();};
+document.getElementById('reset35').onclick=()=>{ if(!confirm('Очистить все ответы задания 35?'))return; state35.forEach(s=>{s.seq=[];s.term='';s.checked=false;}); render35(); };
+render35();
+
+/* ================= ЗАДАНИЕ 38 ================= */
+const HEROES=['Г-жа Простакова','Митрофан','Скотинин','Стародум'];
+const C38=[
+ [1,'Не сдерживаемая никакими нравственными устоями, полная сознания своей безграничной власти и безнаказанности, она превратилась в «госпожу бесчеловечную».',0],
+ [2,'Резко и гневно обличает придворное дворянство.',3],
+ [3,'Все его мысли и интересы связаны только со своим скотным двором.',2],
+ [4,'Это человек твёрдых нравственных правил, усвоенных ещё с детства.',3],
+ [5,'В буквальном переводе с греческого языка его имя означает «являющий свою мать», т. е. похожий на свою мать.',1],
+ [6,'Считает, что управлять хозяйством можно только с помощью ругани и побоев.',0],
+ [7,'С момента появления своего на сцене и до конца неустанно говорит о необходимости служения отечеству, о честном выполнении дворянином своего долга перед родиной, о содействии её благу.',3],
+ [8,'Враждебно относится к просвещению, считает, что образование излишне: «Без наук люди живут и жили».',0],
+ [9,'Умственное развитие крайне низко, так как питает непреодолимое отвращение к труду, к учению.',1],
+ [10,'С уважением вспоминает о своём отце: «Отец мой непрестанно мне твердил одно и то же: имея сердце, имей душу — и будешь человек во всякое время».',3],
+ [11,'Свирепый крепостник, мастер «сдирать» с крестьян оброк.',2],
+ [12,'По его мнению, исправить нравы двора Екатерины невозможно: «Тщетно звать врача к больным неисцельно: тут врач не пособит, разве сам заразится».',3],
+ [13,'Ради личной выгоды может пойти даже на преступление (попытка похитить Софью).',0],
+ [14,'Оставил придворную службу, отправился в Сибирь и разбогател благодаря труду — «без подлой выслуги, не грабя отечества».',3],
+ [15,'Не знает любви ни к кому, даже к самым близким.',2],
+ [16,'Честная и полезная служба отечеству — для него первая и священная обязанность дворянина.',3],
+ [17,'Герой считает, что, только воспитывая хорошие душевные качества, можно вырастить настоящего человека.',3],
+ [18,'Отсутствие культуры сказывается в употреблении просторечий («первоёт» — вместо «первый-то», «ища» — вместо «ещё», «деушки» — вместо «девушки»), хотя иногда встречаются и литературные слова и обороты, правда, несколько искажённые: «письмецо амурное», «рекомендую вам дорогого гостя нашего, господина Правдина».',0],
+ [19,'В речах героя выражена целая программа взглядов и деятельности передового дворянства той эпохи.',3],
+ [20,'Неразвитость героя сказывается в том, что он не умеет пользоваться словом, связно говорить. Он выражается односложно («небось, брат»), в языке много просторечий, слов и оборотов, заимствованных у дворовых («По мне, куда велят! Нырну — так поминай как звали!»).',1]
+];
+let place38 = {}; // n -> hero index
+let sel38 = null, checked38=false;
+const poolEl=document.getElementById('pool38'), colsEl=document.getElementById('cols38'), detail=document.getElementById('detail38');
+
+function render38(){
+  poolEl.innerHTML=''; colsEl.innerHTML='';
+  const left=C38.filter(c=>place38[c[0]]===undefined);
+  document.getElementById('poolTitle').textContent= left.length?`Характеристики (осталось: ${left.length})`:'Все характеристики распределены';
+  left.forEach(c=>{
+    const d=document.createElement('div'); d.className='card'+(sel38===c[0]?' sel':''); d.tabIndex=0; d.draggable=true;
+    d.innerHTML=`<span class="n">${c[0]}</span><span>${c[1]}</span>`;
+    d.onclick=()=>{sel38 = sel38===c[0]?null:c[0]; render38();};
+    d.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault(); d.click();}};
+    d.ondragstart=e=>{e.dataTransfer.setData('text/plain',c[0]); sel38=c[0];};
+    poolEl.appendChild(d);
+  });
+  HEROES.forEach((h,hi)=>{
+    const col=document.createElement('div'); col.className='col'+(sel38!==null&&place38[sel38]!==hi?' target':''); col.tabIndex=0;
+    col.innerHTML=`<h3>${h}</h3>`;
+    const chips=document.createElement('div'); chips.className='chips';
+    const inCol=C38.filter(c=>place38[c[0]]===hi);
+    if(!inCol.length) chips.innerHTML='<span class="empty">пока пусто</span>';
+    inCol.forEach(c=>{
+      const b=document.createElement('button'); b.className='chip'; b.textContent=c[0];
+      if(checked38) b.classList.add(c[2]===hi?'ok':'bad');
+      if(sel38===c[0]) b.classList.add('sel');
+      b.title=c[1];
+      b.onclick=e=>{e.stopPropagation(); sel38 = sel38===c[0]?null:c[0]; render38();};
+      b.draggable=true; b.ondragstart=e=>{e.dataTransfer.setData('text/plain',c[0]); sel38=c[0];};
+      chips.appendChild(b);
+    });
+    col.appendChild(chips);
+    const drop=n=>{ if(n===null)return; place38[n]=hi; sel38=null; checked38=false; render38(); };
+    col.onclick=()=>drop(sel38);
+    col.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault(); drop(sel38);}};
+    col.ondragover=e=>e.preventDefault();
+    col.ondrop=e=>{e.preventDefault(); drop(+e.dataTransfer.getData('text/plain'));};
+    colsEl.appendChild(col);
+  });
+  // detail of selected placed chip
+  if(sel38!==null && place38[sel38]!==undefined){
+    const c=C38.find(x=>x[0]===sel38);
+    detail.innerHTML=`<b>${c[0]}.</b> ${c[1]}<br><button class="btn quiet" style="margin-top:8px" id="back38">Вернуть в список</button> <span style="color:var(--muted);font-size:14px">или нажми на другую колонку</span>`;
+    detail.classList.add('show');
+    document.getElementById('back38').onclick=()=>{delete place38[sel38]; sel38=null; checked38=false; render38();};
+  } else detail.classList.remove('show');
+  const n=Object.keys(place38).length;
+  if(!checked38) document.getElementById('score38').textContent = n<20?`Распределено: ${n} из 20`:'Все 20 на местах — можно проверять';
+}
+// return to pool by dropping on the pool
+poolEl.ondragover=e=>e.preventDefault();
+poolEl.ondrop=e=>{e.preventDefault(); delete place38[+e.dataTransfer.getData('text/plain')]; sel38=null; checked38=false; render38();};
+
+document.getElementById('check38').onclick=()=>{
+  const n=Object.keys(place38).length;
+  checked38=true; sel38=null;
+  const right=C38.filter(c=>place38[c[0]]===c[2]).length;
+  render38();
+  document.getElementById('score38').textContent = `Верно: ${right} из 20` + (n<20?` (не распределено: ${20-n})`:'') + (right===20?' — отлично!':'. Красные номера перенеси в другие колонки.');
+};
+document.getElementById('show38').onclick=()=>{
+  if(!confirm('Показать правильное распределение? Твои ответы будут заменены.'))return;
+  place38={}; C38.forEach(c=>place38[c[0]]=c[2]); checked38=true; sel38=null; render38();
+  document.getElementById('score38').textContent='Показаны правильные ответы';
+};
+document.getElementById('reset38').onclick=()=>{ if(!confirm('Очистить все ответы задания 38?'))return; place38={}; sel38=null; checked38=false; render38(); };
+render38();
+</script>
+</body>
+</html>
