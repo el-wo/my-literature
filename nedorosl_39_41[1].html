@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>«Недоросль» — задания 39–41</title>
+<style>
+:root{
+  --paper:#EDEFF1; --sheet:#FFFFFF; --ink:#1D2129; --muted:#5B6270;
+  --curtain:#7A1E2C; --curtain-soft:#F3E4E6; --gold:#A8843A;
+  --ok:#2E6B46; --ok-bg:#E3F1E8; --bad:#A8261E; --bad-bg:#F8E3E1;
+  --line:#CDD2D9; --slug:#F7F4EC;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#15181D; --sheet:#1E232A; --ink:#E7E9EC; --muted:#9AA2AE;
+    --curtain:#D9707F; --curtain-soft:#3A2429; --gold:#D2B06A;
+    --ok:#7CC79A; --ok-bg:#1E3527; --bad:#F08A80; --bad-bg:#3D2220;
+    --line:#39414C; --slug:#2A2F37;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:"PT Serif",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;
+  padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+header{text-align:center;padding:26px 10px 18px;border-top:3px double var(--curtain);border-bottom:3px double var(--curtain);margin-bottom:22px}
+header h1{font-size:clamp(34px,7vw,56px);letter-spacing:.14em;margin:0;color:var(--curtain);font-weight:700;line-height:1.05}
+header p{margin:6px 0 0;color:var(--muted);font-style:italic}
+nav{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+nav button{font:inherit;border:1.5px solid var(--curtain);background:transparent;color:var(--curtain);padding:8px 18px;border-radius:999px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--curtain);color:#fff}
+button:focus-visible,input:focus-visible,.card:focus-visible,.col:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+section{display:none}
+section.active{display:block}
+.task{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:20px 22px;margin-bottom:18px}
+.task h2{margin:0 0 6px;font-size:22px}
+.task .how{color:var(--muted);margin:0;max-width:72ch}
+.row{background:var(--sheet);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:4px;padding:16px 18px;margin-bottom:12px}
+.row.ok{border-left-color:var(--ok)} .row.bad{border-left-color:var(--bad)}
+.row-head{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
+.letter{font-size:26px;font-weight:700;color:var(--curtain);min-width:1.2em}
+.row-head .hint{color:var(--muted);font-size:15px}
+.tiles{display:flex;flex-wrap:wrap;gap:7px}
+.tile{font:inherit;font-size:16px;background:var(--slug);color:var(--ink);border:1px solid var(--line);border-bottom-width:3px;border-radius:3px;padding:3px 10px;cursor:pointer}
+.tile sup{color:var(--gold);font-weight:700;margin-right:3px;font-size:11px}
+.tile.used{opacity:.28;cursor:default;border-bottom-width:1px}
+.build{min-height:48px;margin:12px 0 10px;padding:9px 12px;border:1.5px dashed var(--line);border-radius:4px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.build:empty::before{content:"Нажимай на слова по порядку — они появятся здесь";color:var(--muted);font-style:italic;font-size:15px}
+.build .tile{background:var(--curtain-soft);border-color:var(--curtain)}
+.meta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.order{font-size:15px;color:var(--muted)}
+.order b{color:var(--ink);letter-spacing:.04em}
+.term{display:flex;align-items:center;gap:8px}
+.term input{font:inherit;padding:6px 10px;border:1.5px solid var(--line);border-radius:4px;background:var(--sheet);color:var(--ink);width:200px}
+.actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.btn{font:inherit;font-size:15px;padding:6px 14px;border-radius:4px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.btn.main{background:var(--ink);color:var(--sheet)}
+.btn.quiet{border-color:var(--line);color:var(--muted)}
+.fb{margin-top:10px;font-size:15px;padding:8px 12px;border-radius:4px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);color:var(--ok)} .fb.bad{background:var(--bad-bg);color:var(--bad)}
+.fb .model{color:var(--ink);display:block;margin-top:4px}
+.total{position:sticky;bottom:0;background:var(--sheet);border:1px solid var(--line);border-top:3px double var(--curtain);border-radius:6px 6px 0 0;padding:12px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.total .score{font-size:18px;margin-right:auto}
+/* 38 */
+.pool{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:9px 12px 9px 10px;cursor:pointer;display:flex;gap:10px;font-size:15.5px;line-height:1.45;user-select:none}
+.card .n{font-weight:700;color:var(--gold);min-width:1.6em;text-align:right}
+.card.sel{border-color:var(--curtain);box-shadow:0 0 0 2px var(--curtain) inset;background:var(--curtain-soft)}
+.card.ok{border-color:var(--ok);background:var(--ok-bg)} .card.bad{border-color:var(--bad);background:var(--bad-bg)}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+@media (max-width:760px){.cols{grid-template-columns:1fr 1fr}}
+@media (max-width:440px){.cols{grid-template-columns:1fr}}
+.col{background:var(--sheet);border:1.5px solid var(--line);border-radius:4px;min-height:120px;padding:0 0 8px;cursor:pointer;display:flex;flex-direction:column}
+.col h3{margin:0;padding:9px 10px;font-size:17px;text-align:center;border-bottom:1px solid var(--line);color:var(--curtain)}
+.col.target{border-color:var(--curtain);border-style:dashed}
+.col .chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px}
+.chip{font:inherit;font-weight:700;font-size:15px;min-width:36px;padding:4px 8px;border-radius:3px;border:1px solid var(--line);background:var(--slug);color:var(--ink);cursor:pointer}
+.chip.sel{border-color:var(--curtain);background:var(--curtain-soft)}
+.chip.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.chip.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
+.col .empty{color:var(--muted);font-size:14px;font-style:italic;padding:4px 10px}
+.pool-title{font-size:16px;color:var(--muted);margin:0 0 8px}
+.detail{background:var(--curtain-soft);border-left:4px solid var(--curtain);padding:10px 14px;border-radius:0 4px 4px 0;margin-bottom:14px;font-size:15.5px;display:none}
+.detail.show{display:block}
+@media (prefers-reduced-motion:no-preference){.tile,.card,.chip{transition:background .15s,border-color .15s}}
+
+.mt{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:14px;align-items:start}
+@media (max-width:720px){.mt{grid-template-columns:1fr}}
+.mt h3{margin:0 0 8px;font-size:16px;color:var(--muted);font-weight:400;font-style:italic}
+.mcol{display:flex;flex-direction:column;gap:6px}
+.lw,.rw{font:inherit;text-align:left;display:flex;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--sheet);color:var(--ink);cursor:pointer;font-size:16px;line-height:1.35}
+.lw .n,.rw .n{font-weight:700;color:var(--gold);min-width:1.5em;text-align:right;flex:none}
+.lw .word{flex:1}
+.lw .slot{flex:none;min-width:34px;height:30px;border:1.5px dashed var(--line);border-radius:4px;display:grid;place-items:center;font-weight:700;color:var(--curtain)}
+.lw .slot.filled{border-style:solid;border-color:var(--curtain);background:var(--curtain-soft)}
+.rw .used{flex:none;margin-left:auto;font-size:13px;font-weight:700;color:#fff;background:var(--curtain);border-radius:10px;padding:1px 8px}
+.rw.taken{opacity:.55}
+.lw.sel,.rw.sel{border-color:var(--curtain);box-shadow:0 0 0 2px var(--curtain) inset;background:var(--curtain-soft);opacity:1}
+.lw.ok{border-color:var(--ok);background:var(--ok-bg)} .lw.bad{border-color:var(--bad);background:var(--bad-bg)}
+.lw .corr{font-size:13px;color:var(--bad);flex:none}
+.anstable{border-collapse:collapse;margin-top:18px;width:100%;table-layout:fixed}
+.anstable td,.anstable th{border:1px solid var(--line);text-align:center;padding:4px 0;font-size:15px}
+.anstable th{background:var(--curtain-soft);color:var(--curtain);font-weight:700}
+.anstable td{height:32px;font-weight:700}
+.anstable-wrap{overflow-x:auto}
+.intro-note{background:var(--curtain-soft);border-left:4px solid var(--curtain);padding:10px 14px;border-radius:0 4px 4px 0;margin:12px 0 0;font-size:15.5px}
+.diagram{width:100%;max-width:640px;display:block;margin:10px auto 6px}
+.diagram .node rect{fill:var(--sheet);stroke:var(--curtain);stroke-width:2}
+.diagram .node text{fill:var(--ink);font-size:17px;font-weight:700;text-anchor:middle;dominant-baseline:middle;font-family:inherit}
+.diagram line{stroke:var(--curtain);stroke-width:1.6}
+.diagram .lab{font-size:14px;text-anchor:middle;dominant-baseline:middle;font-family:inherit;fill:var(--muted);font-style:italic}
+.diagram .lab.set{fill:var(--curtain);font-style:normal;font-weight:700}
+.diagram .lab.ok{fill:var(--ok)} .diagram .lab.bad{fill:var(--bad)}
+.rel{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 12px;border:1.5px solid var(--line);border-radius:6px;font-size:17px}
+.rel select{font:inherit;font-size:16px;padding:4px 8px;border:1.5px solid var(--line);border-radius:4px;background:var(--sheet);color:var(--ink)}
+.rel.ok{border-color:var(--ok);background:var(--ok-bg)} .rel.bad{border-color:var(--bad);background:var(--bad-bg)}
+.rel .corr{font-size:14px;color:var(--bad)}
+.rels{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+@media (max-width:640px){.rels{grid-template-columns:1fr}}
+.gloss{margin-top:14px;font-size:15.5px;color:var(--muted)}
+.gloss b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="index.html" style="display:inline-block;margin-bottom:8px;color:var(--curtain);font-size:15px;text-decoration:none">← Ко всем заданиям</a>
+  <h1>НЕДОРОСЛЬ</h1>
+  <p>Д. И. Фонвизин · задания 39–41</p>
+</header>
+<nav role="tablist">
+  <button role="tab" aria-selected="true" data-tab="t39">Задание 39. Словарь комедии</button>
+  <button role="tab" aria-selected="false" data-tab="t40">Задание 40. Крылатые выражения</button>
+  <button role="tab" aria-selected="false" data-tab="t41">Задание 41. Родство и свойство</button>
+</nav>
+
+<section id="t39" class="active">
+  <div class="task"><h2>Лексическое значение слов</h2>
+    <p class="how">К словам и выражениям из комедии в левой колонке подбери значение из правой. Нажми на слово, а затем на подходящее значение (можно и наоборот). Чтобы изменить ответ, просто выбери другое значение.</p></div>
+  <div class="task" id="m39"></div>
+  <div class="total"><span class="score" id="s39">Подобрано: 0 из 18</span>
+    <button class="btn main" data-act="check" data-t="39">Проверить</button><button class="btn" data-act="show" data-t="39">Показать ответы</button><button class="btn quiet" data-act="reset" data-t="39">Начать заново</button></div>
+</section>
+
+<section id="t40">
+  <div class="task"><h2>Крылатые выражения</h2>
+    <p class="how">Многие слова, выражения, имена и фамилии героев комедии стали крылатыми. Подбери к каждому выражению его значение. Нажми на выражение, а затем на значение.</p></div>
+  <div class="task" id="m40"></div>
+  <div class="total"><span class="score" id="s40">Подобрано: 0 из 11</span>
+    <button class="btn main" data-act="check" data-t="40">Проверить</button><button class="btn" data-act="show" data-t="40">Показать ответы</button><button class="btn quiet" data-act="reset" data-t="40">Начать заново</button></div>
+</section>
+
+<section id="t41">
+  <div class="task"><h2>Родственные отношения героев</h2>
+    <p class="how">Определи родственные отношения между главными героями комедии. Выбери термины родства и свойства в каждой строке — они появятся на схеме.</p>
+    <p class="intro-note"><b>Свойство́</b> — отношение между людьми, возникающее из брачного союза одного из родственников (отношения между супругом и кровными родственниками другого супруга, а также между родственниками супругов).</p></div>
+  <div class="task">
+    <svg class="diagram" id="diag" viewBox="0 0 640 330" role="img" aria-label="Схема отношений: Митрофан, Скотинин, Простакова, Простаков"></svg>
+    <div class="rels" id="rels"></div>
+    <p class="gloss"><b>Слова для справок:</b> шурин — брат жены; свояк — муж сестры; племянник — сын брата или сестры; дядя — брат отца или матери, а также муж тёти.</p>
+  </div>
+  <div class="total"><span class="score" id="s41">Заполнено: 0 из 10</span>
+    <button class="btn main" data-act="check" data-t="41">Проверить</button><button class="btn" data-act="show" data-t="41">Показать ответы</button><button class="btn quiet" data-act="reset" data-t="41">Начать заново</button></div>
+</section>
+</div>
+
+<script>
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('active',s.id===b.dataset.tab));
+}));
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+/* ---------- данные ---------- */
+const LET=['А','Б','В','Г','Д','Е','Ж','З','И','К','Л','М','Н','О','П','Р','С','Т'];
+const M39={
+  left:['Ча́ять','Потво́рство','Сго́вор','Бе́стия','Сво́йственница','Челоби́тчик','И концы в воду','Около́ток (околодок)','Обро́к','Па́мятца (в памятцах за упокой поминали)','Об закла́д бьюсь','Лих (да лих не очень тебе верю)','Наме́стничество','Фу́рия','Корыстолю́бец','Тира́нство','Обиня́к','Лицеприя́тие'],
+  right:['Тот, кто подавал челобитную, проситель','Плут, пройдоха','Окружающая местность, окрестные селения','Думать, полагать, знать','Ручаюсь, совершенно уверен','Снисходительное отношение к чему-либо','Область, управляемая наместником','Человек, чрезмерно любивший деньги, стремившийся к личной выгоде, наживе','Соглашение между родителями жениха и невесты о браке, помолвке; обряд, которым сопровождалось это соглашение','Пристрастное отношение к кому-либо, чему-либо, предпочтение одного лица другому из-за дружественных, родственных отношений, личных связей, выгоды и т. д.','Тетрадь, лист бумаги, куда вписывали имена умерших, поминаемых на панихидах','Злая, сварливая женщина (по названию богини-мстительницы в древнеримской мифологии)','Родственница жены или мужа','Не осталось (чтобы не осталось) никаких улик, следов, признаков чего-либо','Осторожный, иносказательный оборот речи, недомолвка, намёк','Усиливает неодобрение, несогласие, отрицание','Натуральный или денежный сбор, взимавшийся при крепостном праве помещиками с крестьян','Поведение тирана (угнетателя, мучителя, деспота)'],
+  key:['Г','Е','И','Б','Н','А','О','В','С','Л','Д','Р','Ж','М','З','Т','П','К']
+};
+const M40={
+  left:['Без вины виноватые','Вральман','Митрофан','Не́доросль','Не мечи́те би́сера перед свиньями','Не хочу учиться, хочу жениться','По во́льности дворянской (дворянства)','Простаковы','Скоти́нины','Убояться бе́здны премудрости','Честный человек должен быть совершенно честный человек'],
+  right:['Честный человек должен быть честен во всём, во всех областях своей жизни','Невежественные, недалёкие люди','Грубый, невежественный человек, который и ведёт себя по-скотски','Фраза употребляется как характеристика ленивых, праздных переростков','Об избалованном великовозрастном юноше, недоучке и маменькином сынке','О недалёком и ленивом молодом человеке, о неуче','Не стоит тратить слов для убеждения, доказательства или разъяснения чего-либо с теми, кто этого не понимает или не может понять','Об отчаянном лгуне и хвастуне','О невинном, но обвиняемом в чём-либо человеке','Это выражение стало употребляться по поводу кого-либо, считающего себя вправе нарушать общепризнанные нормы поведения','Данное выражение используется по отношению к недоучкам или к людям, спасовавшим перед какими-либо трудностями, которые кажутся им непреодолимыми, требующими слишком много умственных усилий'],
+  key:['И','З','Д','Е','Ж','Г','К','Б','В','Л','А']
+};
+
+/* ---------- сопоставление ---------- */
+function makeMatch(id,data){
+  const host=document.getElementById('m'+id), score=document.getElementById('s'+id);
+  const st={v:{},sel:null,checked:false};
+  const letters=LET.slice(0,data.right.length);
+  function render(){
+    host.innerHTML='';
+    const g=el('div','mt'), L=el('div','mcol'), R=el('div','mcol');
+    L.appendChild(el('h3','','Слова и выражения')); R.appendChild(el('h3','','Значение'));
+    data.left.forEach((w,k)=>{
+      const b=el('button','lw',`<span class="n">${k+1}</span><span class="word">${w}</span><span class="slot${st.v[k]?' filled':''}">${st.v[k]||''}</span>`);
+      if(st.sel&&st.sel.side==='L'&&st.sel.k===k) b.classList.add('sel');
+      if(st.checked&&st.v[k]){const ok=st.v[k]===data.key[k]; b.classList.add(ok?'ok':'bad');}
+      b.onclick=()=>pick('L',k); L.appendChild(b);
+    });
+    letters.forEach((l,k)=>{
+      const owner=Object.keys(st.v).find(x=>st.v[x]===l);
+      const b=el('button','rw'+(owner!==undefined?' taken':''),`<span class="n">${l}</span><span>${data.right[k]}</span>${owner!==undefined?`<span class="used">${+owner+1}</span>`:''}`);
+      if(st.sel&&st.sel.side==='R'&&st.sel.k===k) b.classList.add('sel');
+      b.onclick=()=>pick('R',k); R.appendChild(b);
+    });
+    g.append(L,R); host.appendChild(g);
+    const n=data.left.length, half=Math.ceil(n/2), tw=el('div','anstable-wrap');
+    let t='<p class="how" style="margin-top:16px">Ответ в таблице (заполняется сам):</p><table class="anstable">';
+    [[0,half],[half,n]].forEach(([a,b])=>{t+='<tr>'+Array.from({length:b-a},(_,i)=>`<th>${a+i+1}</th>`).join('')+'</tr><tr>'+Array.from({length:b-a},(_,i)=>`<td>${st.v[a+i]||''}</td>`).join('')+'</tr>';});
+    tw.innerHTML=t+'</table>'; host.appendChild(tw);
+    const filled=Object.keys(st.v).length;
+    if(!st.checked) score.textContent=`Подобрано: ${filled} из ${n}`;
+  }
+  function pick(side,k){
+    st.checked=false;
+    if(!st.sel||st.sel.side===side){ st.sel=(st.sel&&st.sel.side===side&&st.sel.k===k)?null:{side,k}; render(); return; }
+    const li= side==='L'?k:st.sel.k, ri= side==='R'?k:st.sel.k, letter=letters[ri];
+    Object.keys(st.v).forEach(x=>{if(st.v[x]===letter) delete st.v[x];});
+    st.v[li]=letter; st.sel=null; render();
+  }
+  return {
+    check(){ st.checked=true; st.sel=null; render(); const right=data.left.filter((_,k)=>st.v[k]===data.key[k]).length;
+      score.textContent= right===data.left.length?`Всё верно! ${right} из ${right}`:`Верно ${right} из ${data.left.length}. Красные строки исправь.`; },
+    show(){ data.key.forEach((l,k)=>st.v[k]=l); st.checked=true; st.sel=null; render(); score.textContent='Показаны правильные ответы'; },
+    reset(){ st.v={}; st.sel=null; st.checked=false; render(); },
+    render
+  };
+}
+
+/* ---------- родство ---------- */
+const NODES={m:{x:320,y:40,t:'Митрофан'},s:{x:110,y:165,t:'Скотинин'},pa:{x:530,y:165,t:'Простакова'},pv:{x:320,y:290,t:'Простаков'}};
+const TERMS=['брат','дядя','жена','зять','мать','муж','отец','племянник','свояк','сестра','сын','шурин'];
+const RELS=[
+  {a:'s',b:'m',txt:['Скотинин —','Митрофана'],ans:['дядя']},
+  {a:'m',b:'s',txt:['Митрофан —','Скотинина'],ans:['племянник']},
+  {a:'pa',b:'m',txt:['Простакова —','Митрофана'],ans:['мать']},
+  {a:'m',b:'pa',txt:['Митрофан —','Простаковой'],ans:['сын']},
+  {a:'pv',b:'m',txt:['Простаков —','Митрофана'],ans:['отец']},
+  {a:'m',b:'pv',txt:['Митрофан —','Простакова'],ans:['сын']},
+  {a:'pa',b:'pv',txt:['Простакова —','Простакова'],ans:['жена']},
+  {a:'pv',b:'pa',txt:['Простаков —','Простаковой'],ans:['муж']},
+  {a:'s',b:'pv',txt:['Скотинин —','Простакова'],ans:['шурин']},
+  {a:'pv',b:'s',txt:['Простаков —','Скотинина'],ans:['свояк','зять']}
+];
+const R41={v:{},checked:false};
+function draw41(){
+  const svg=document.getElementById('diag'); let out='';
+  const edges=[['s','m'],['m','pa'],['m','pv'],['s','pv'],['pa','pv']];
+  edges.forEach(([a,b])=>{const A=NODES[a],B=NODES[b]; out+=`<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"/>`;});
+  RELS.forEach((r,k)=>{
+    const A=NODES[r.a],B=NODES[r.b], dx=B.x-A.x, dy=B.y-A.y, len=Math.hypot(dx,dy);
+    const f= Math.abs(dx)<1 ? .3 : .34;
+    let px=-dy/len, py=dx/len; const off=18;
+    const x=A.x+dx*f+px*off*(r.a<r.b?1:-1), y=A.y+dy*f+py*off*(r.a<r.b?1:-1)+ (Math.abs(dx)<1?0:0);
+    const v=R41.v[k]; let cls='lab'+(v?' set':''); if(R41.checked&&v) cls+= r.ans.includes(v)?' ok':' bad';
+    out+=`<text class="${cls}" x="${x+(Math.abs(dx)<1?(r.a==='m'?-42:42):0)}" y="${y}">${v||'?'}</text>`;
+  });
+  Object.values(NODES).forEach(n=>{out+=`<g class="node"><rect x="${n.x-72}" y="${n.y-20}" width="144" height="40" rx="4"/><text x="${n.x}" y="${n.y+1}">${n.t}</text></g>`;});
+  svg.innerHTML=out;
+}
+function render41(){
+  const host=document.getElementById('rels'); host.innerHTML='';
+  RELS.forEach((r,k)=>{
+    const row=el('div','rel'); row.appendChild(el('span','',r.txt[0]));
+    const s=el('select'); s.innerHTML='<option value="">выбрать</option>'+TERMS.map(t=>`<option${R41.v[k]===t?' selected':''}>${t}</option>`).join('');
+    s.setAttribute('aria-label',`${r.txt[0]} … ${r.txt[1]}`);
+    s.onchange=()=>{ if(s.value) R41.v[k]=s.value; else delete R41.v[k]; R41.checked=false; render41(); };
+    row.appendChild(s); row.appendChild(el('span','',r.txt[1]));
+    if(R41.checked){ const ok=r.ans.includes(R41.v[k]); row.classList.add(ok?'ok':'bad'); }
+    host.appendChild(row);
+  });
+  draw41();
+  if(!R41.checked) document.getElementById('s41').textContent=`Заполнено: ${Object.keys(R41.v).length} из ${RELS.length}`;
+}
+const T41={
+  check(){ R41.checked=true; render41(); const right=RELS.filter((r,k)=>r.ans.includes(R41.v[k])).length;
+    document.getElementById('s41').textContent= right===RELS.length?`Всё верно! ${right} из ${right}. (Простаков для Скотинина — свояк по справке; строже говоря, зять.)`:`Верно ${right} из ${RELS.length}. Загляни в «Слова для справок».`; },
+  show(){ RELS.forEach((r,k)=>R41.v[k]=r.ans[0]); R41.checked=true; render41(); document.getElementById('s41').textContent='Показаны правильные ответы. Простаков для Скотинина — свояк (по справке), точнее — зять.'; },
+  reset(){ R41.v={}; R41.checked=false; render41(); }
+};
+
+const H={'39':makeMatch('39',M39),'40':makeMatch('40',M40),'41':T41};
+H['39'].render(); H['40'].render(); render41();
+document.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{
+  const act=b.dataset.act, h=H[b.dataset.t];
+  if((act==='show'||act==='reset')&&!confirm(act==='show'?'Показать правильные ответы? Твои ответы будут заменены.':'Очистить все ответы этого задания?')) return;
+  h[act]();
+});
+</script>
+</body>
+</html>

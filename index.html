@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Литература: задания по произведениям</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f0e8; --surface: #fffdf8; --border: #ddd6c4; --text: #2a2118;
+      --muted: #7a6e5f; --hint: #b0a48c; --green: #3a7d44; --green-bg: #eaf4ec;
+      --accent: #7a1e2c; --accent-bg: #f5e6e8;
+      --shadow: 0 4px 24px rgba(60,40,10,0.10);
+      --serif: 'Merriweather', Georgia, 'Times New Roman', serif;
+      --sans: 'Nunito', 'Segoe UI', Arial, sans-serif;
+    }
+    body { background: var(--bg); font-family: var(--sans); color: var(--text); min-height: 100vh; padding: 2.5rem 1rem 4rem; }
+    .wrap { max-width: 860px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 2.2rem; }
+    header h1 { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
+    header p { font-size: 0.95rem; color: var(--muted); margin-top: 0.5rem; }
+
+    .works { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 2.4rem; }
+    .work-btn {
+      font-family: var(--sans); text-align: left; cursor: pointer;
+      background: var(--surface); color: var(--text); border: 2px solid var(--border); border-radius: 16px;
+      padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 4px;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+    .work-btn .author { font-size: 0.8rem; font-weight: 700; color: var(--muted); letter-spacing: 0.02em; }
+    .work-btn .title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; }
+    .work-btn .n { font-size: 0.78rem; font-weight: 700; color: var(--hint); }
+    .work-btn:hover { border-color: var(--accent); }
+    .work-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .work-btn.active .author, .work-btn.active .n { color: #f0d6da; }
+    .work-btn:focus-visible, .set:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+    .section-head h2 { font-family: var(--serif); font-size: 1.4rem; }
+    .section-head span { font-size: 0.85rem; color: var(--muted); }
+    .about { font-size: 0.92rem; color: var(--muted); line-height: 1.6; border-bottom: 1px solid var(--border); padding-bottom: 0.9rem; margin-bottom: 1.2rem; }
+
+    .sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+    .set {
+      display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: var(--text);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.3rem 1.3rem 1.1rem; box-shadow: var(--shadow); transition: border-color 0.15s, transform 0.15s;
+    }
+    a.set:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .set h3 { font-family: var(--serif); font-size: 1.05rem; line-height: 1.4; }
+    .set p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+    .set > :nth-last-child(2) { flex: 1; }
+    .set ul { font-size: 0.85rem; color: var(--muted); line-height: 1.6; padding-left: 1.1em; flex: 1; }
+    .set .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 0.8rem; font-weight: 700; }
+    .tag-ready { color: var(--green); background: var(--green-bg); border-radius: 99px; padding: 3px 12px; }
+    .tag-soon { color: var(--hint); border: 1px dashed var(--border); border-radius: 99px; padding: 2px 12px; }
+    .set .go { color: var(--accent); }
+    .set.soon { box-shadow: none; background: transparent; border-style: dashed; }
+    .set.soon h3 { color: var(--muted); }
+    .empty-msg { text-align: center; color: var(--muted); padding: 2.5rem 1rem; border: 1px dashed var(--border); border-radius: 16px; line-height: 1.7; }
+    @media (max-width: 480px) { header h1 { font-size: 1.4rem; } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Литература</h1>
+    <p>Выбери произведение, а затем задание</p>
+  </header>
+  <nav class="works" id="works" aria-label="Произведения"></nav>
+  <main id="content"></main>
+</div>
+
+<script>
+/*
+  КАК ДОБАВИТЬ НОВОЕ ЗАДАНИЕ:
+  1. Положите HTML-файл задания в ту же папку, что и эта страница.
+  2. Найдите нужное произведение ниже и добавьте объект в его список sets:
+     { title: "...", desc: "...", tasks: ["...", "..."], file: "имя_файла.html" }
+     (tasks — необязательный список того, что внутри; можно оставить только desc)
+  3. Если file не указан — карточка показывается как «В разработке».
+
+  КАК ДОБАВИТЬ НОВОЕ ПРОИЗВЕДЕНИЕ:
+  Скопируйте блок { id: ..., author: ..., title: ..., about: ..., sets: [] } и поменяйте данные.
+  id — латиницей, без пробелов.
+*/
+const WORKS = [
+  { id: "nedorosl", author: "Д. И. Фонвизин", title: "«Недоросль»",
+    about: "Комедия в пяти действиях (1781). Русский классицизм: говорящие фамилии, «три единства», деление героев на положительных и отрицательных.",
+    sets: [
+      { title: "Задания 35 и 38",
+        desc: "Литературоведческие термины и герои комедии.",
+        tasks: ["35 — собрать определения терминов драмы из слов и назвать термин", "38 — распределить характеристики героев: Простакова, Митрофан, Скотинин, Стародум"],
+        file: "nedorosl_35_38.html" },
+      { title: "Задания 39–41",
+        desc: "Язык комедии и отношения героев.",
+        tasks: ["39 — лексическое значение устаревших слов", "40 — крылатые выражения из комедии", "41 — родство и свойство героев (схема)"],
+        file: "nedorosl_39_41.html" }
+    ]},
+  { id: "meshchanin", author: "Ж.-Б. Мольер", title: "«Мещанин во дворянстве»",
+    about: "Комедия-балет (1670). Классицизм во французской комедии: осмеяние порока, характеры-маски, господин Журден и его «учителя».",
+    sets: [] }
+];
+
+let current = (function(){ try { return localStorage.getItem("lit-work"); } catch (e) { return null; } })() || WORKS[0].id;
+if (!WORKS.some(w => w.id === current)) current = WORKS[0].id;
+
+function readyCount(w) { return w.sets.filter(s => s.file).length; }
+function plural(n) { return n % 10 === 1 && n % 100 !== 11 ? "набор" : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? "набора" : "наборов"); }
+
+function renderNav() {
+  document.getElementById("works").innerHTML = WORKS.map(w => {
+    const n = readyCount(w);
+    return `<button class="work-btn${w.id === current ? " active" : ""}" onclick="select('${w.id}')" aria-pressed="${w.id === current}">
+      <span class="author">${w.author}</span><span class="title">${w.title}</span>
+      <span class="n">${n ? `${n} ${plural(n)} заданий` : "задания скоро появятся"}</span></button>`;
+  }).join("");
+}
+
+function renderContent() {
+  const w = WORKS.find(x => x.id === current);
+  const body = !w.sets.length
+    ? `<div class="empty-msg">Заданий по произведению ${w.title} пока нет.<br>Они появятся здесь, когда будут добавлены.</div>`
+    : `<div class="sets">` + w.sets.map(s => {
+        const list = s.tasks ? `<ul>${s.tasks.map(t => `<li>${t}</li>`).join("")}</ul>` : "";
+        const inner = `<h3>${s.title}</h3><p>${s.desc}</p>${list}`;
+        return s.file
+          ? `<a class="set" href="${s.file}">${inner}<div class="foot"><span class="tag-ready">Готово</span><span class="go">Начать →</span></div></a>`
+          : `<div class="set soon">${inner}<div class="foot"><span class="tag-soon">В разработке</span></div></div>`;
+      }).join("") + `</div>`;
+  document.getElementById("content").innerHTML = `
+    <div class="section-head"><h2>${w.author} ${w.title}</h2>
+      <span>${w.sets.length ? `Готово: ${readyCount(w)} из ${w.sets.length}` : ""}</span></div>
+    <p class="about">${w.about}</p>
+    ${body}`;
+}
+
+function select(id) { current = id; try { localStorage.setItem("lit-work", id); } catch (e) {} renderNav(); renderContent(); }
+
+renderNav(); renderContent();
+</script>
+</body>
+</html>
