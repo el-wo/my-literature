@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>«Бесприданница» · Действие I · Интерактивный урок</title>
+<style>
+:root{--navy:#1e3a5f;--navy-light:#3b6ea5;--gold:#b8860b;--gold-bg:#fdf9ef;--purple:#8b5cf6;--purple-bg:#f3eefc;--purple-text:#4c1d95;--blue-bg:#eaf2fb;--green:#2f8f5b;--green-bg:#eaf6ef;--red:#c0392b;--line:#dfe4ea;--ink:#1a1a1a}
+*{box-sizing:border-box}
+body{margin:0;background:#e9edf2;font-family:Georgia,'Times New Roman',serif;color:var(--ink)}
+.page{max-width:1040px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 24px rgba(0,0,0,.08);padding:0 0 40px}
+header{padding:26px 40px 0}
+.bc{font-family:Arial,sans-serif;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--navy-light);font-weight:700;border-bottom:3px solid var(--navy);padding-bottom:10px;margin-bottom:16px}
+.hm{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;flex-wrap:wrap}
+h1{margin:0;font-size:28px;color:var(--navy);line-height:1.2}
+h1 small{display:block;font-size:14px;font-weight:400;font-style:italic;color:var(--navy-light);margin-bottom:3px}
+.who{font-family:Arial,sans-serif;font-size:13px;color:#444;display:flex;align-items:center;gap:8px}
+.who input{border:none;border-bottom:1.5px solid #99a3b0;font-family:Georgia,serif;font-size:15px;padding:3px 4px;outline:none;width:220px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e2e5ea;padding:12px 40px 10px;margin-top:16px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{font-family:Arial,sans-serif;font-size:12px;font-weight:700;border:1.5px solid #c7d0db;background:#fff;color:var(--navy);border-radius:999px;padding:6px 13px;cursor:pointer;display:flex;gap:6px;align-items:center}
+nav button .n{background:#eef1f5;border-radius:999px;padding:1px 7px;font-size:11px}
+nav button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+nav button.on .n{background:var(--gold);color:#fff}
+nav button.done:not(.on){border-color:var(--green);color:var(--green)}
+nav button.done .n{background:var(--green);color:#fff}
+.bar{height:5px;background:#eef1f5;margin:0 40px}
+.bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+section.step{display:none;padding:26px 40px 10px;animation:fade .35s}
+section.step.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sh{display:flex;align-items:center;gap:11px;border-bottom:2px solid var(--navy);padding-bottom:8px;margin-bottom:16px}
+.sn{background:var(--gold);color:#fff;font-family:Arial,sans-serif;font-weight:700;border-radius:14px;padding:4px 10px;font-size:12.5px}
+.st{font-weight:700;font-size:21px;color:var(--navy)}
+.ins{font-family:Arial,sans-serif;font-size:13.5px;color:#444;line-height:1.55;margin:0 0 14px}
+.ins b{color:var(--navy)}
+.box{border-radius:8px;padding:13px 17px;margin:0 0 16px;font-family:Arial,sans-serif;font-size:13.5px;line-height:1.55}
+.box .ey{display:block;text-transform:uppercase;font-size:10px;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
+.box.blue{background:var(--blue-bg);border-left:4px solid var(--navy-light);color:#1a3550}.box.blue .ey{color:var(--navy-light)}
+.box.amber{background:#fdf3e3;border-left:4px solid var(--gold);color:#6b4f10}.box.amber .ey{color:var(--gold)}
+.box.purple{background:var(--purple-bg);border-left:4px solid var(--purple);color:var(--purple-text)}.box.purple .ey{color:#7c3aed}
+.q{display:flex;gap:10px;margin:14px 0 6px;font-size:15px;line-height:1.5}
+.qn{background:var(--navy);color:#fff;font-family:Arial,sans-serif;font-weight:700;min-width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:1px}
+textarea{width:100%;border:1.5px solid #dfe4ea;border-radius:8px;font-family:Georgia,serif;font-size:14.5px;line-height:1.5;padding:9px 12px;resize:vertical;outline:none;min-height:64px;background:#fcfdfe}
+textarea:focus,input[type=text]:focus{border-color:var(--navy-light);background:#fff}
+.nextrow{display:flex;justify-content:space-between;margin:26px 0 0;gap:10px}
+.btn{font-family:Arial,sans-serif;font-size:13.5px;font-weight:700;border-radius:999px;padding:10px 22px;cursor:pointer;border:2px solid var(--navy);background:var(--navy);color:#fff}
+.btn.ghost{background:#fff;color:var(--navy)}
+.btn.gold{background:var(--gold);border-color:var(--gold)}
+.btn.sm{padding:6px 14px;font-size:12px}
+/* chips / word cloud */
+.adder{display:flex;gap:8px;margin:6px 0 10px}
+.adder input{flex:1;border:1.5px solid #dfe4ea;border-radius:999px;padding:8px 14px;font-family:Georgia,serif;font-size:14.5px;outline:none}
+.cloud{display:flex;flex-wrap:wrap;gap:8px;min-height:40px;padding:10px;border:1.5px dashed #c7d0db;border-radius:10px;background:#fafbfc}
+.chip{font-family:Georgia,serif;font-size:14px;background:#fff;border:1.5px solid var(--navy-light);color:var(--navy);border-radius:999px;padding:4px 6px 4px 13px;display:inline-flex;align-items:center;gap:6px;animation:pop .25s}
+.chip button{border:none;background:#eef1f5;color:#667;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:12px;line-height:1}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.empty{font-family:Arial,sans-serif;font-size:12px;color:#9aa0a8;font-style:italic}
+/* reveal card */
+.reveal{border:1.5px solid #c7d0db;border-radius:10px;padding:14px 18px;background:#fff;cursor:pointer;font-family:Arial,sans-serif;font-size:13.5px;color:var(--navy);display:flex;align-items:center;gap:10px}
+.reveal .ic{font-size:20px}
+.reveal.open{cursor:default;background:var(--blue-bg);border-color:var(--navy-light);color:#1a3550;line-height:1.55}
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px}
+.flip{perspective:900px;height:178px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--navy);color:#fff;text-align:center}
+.flip .f .nm{font-size:19px;font-weight:700;line-height:1.25}
+.flip .f .hint{font-family:Arial,sans-serif;font-size:11px;color:#b9c8dc;margin-top:8px}
+.flip .b{background:var(--gold-bg);border:1.5px solid #ecdfb8;transform:rotateY(180deg);font-family:Arial,sans-serif;font-size:12.5px;color:#6b4f10;line-height:1.5;justify-content:flex-start;overflow:auto}
+.flip .b .nm{font-family:Georgia,serif;font-weight:700;color:#5a3e0a;font-size:14px;margin-bottom:4px}
+.flip .b input{margin-top:auto;border:none;border-bottom:1.5px solid #c9b27a;background:transparent;font-family:Georgia,serif;font-size:13.5px;padding:4px 2px;outline:none}
+/* puzzle */
+.who-switch{display:flex;gap:8px;margin-bottom:14px}
+.who-switch button{font-family:Georgia,serif;font-size:16px;font-weight:700;border:2px solid #c7d0db;background:#fff;color:var(--navy);border-radius:10px;padding:8px 20px;cursor:pointer}
+.who-switch button.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.who-switch button .ok{color:#7ed3a4;margin-left:6px}
+.arena{display:grid;grid-template-columns:150px 1fr 150px;grid-template-rows:auto 1fr auto;gap:10px;border-radius:14px;background:#f4f6f9;padding:14px;min-height:420px}
+.ring{display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+.ring.top,.ring.bottom{grid-column:1/4;justify-content:center;min-height:34px}
+.ring.left{justify-content:flex-end;align-content:center}
+.ring.right{align-content:center}
+.ring .chip{border-color:var(--gold);color:#5a3e0a;background:#fffaf0}
+.board{background:#fff;border-radius:12px;padding:14px 14px 8px;box-shadow:0 2px 10px rgba(30,58,95,.08)}
+.board .bt{text-align:center;font-weight:700;color:var(--navy);font-size:18px;margin-bottom:10px}
+.prow{display:grid;grid-template-columns:200px 1fr;margin-bottom:9px;min-height:54px}
+.pl{position:relative;background:var(--navy);color:#fff;font-family:Arial,sans-serif;font-weight:700;font-size:12.5px;line-height:1.3;border-radius:9px 0 0 9px;padding:9px 26px 9px 12px;display:flex;align-items:center;z-index:2}
+.pl:after{content:"";position:absolute;right:-13px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:var(--navy)}
+.slot{position:relative;border:2px dashed #b9c4d1;border-left:none;border-radius:0 9px 9px 0;background:#fafbfc;display:flex;align-items:center;padding:6px 12px 6px 22px;font-family:Arial,sans-serif;font-size:12px;color:#9aa0a8;font-style:italic;transition:background .2s,border-color .2s}
+.slot.hot{background:var(--blue-bg);border-color:var(--navy-light)}
+.slot.sel{background:#fffaf0;border-color:var(--gold)}
+.slot.filled{border:2px solid var(--green);border-left:none;background:var(--green-bg);color:#1f4d33;font-style:normal;font-family:Georgia,serif;font-size:13.5px;line-height:1.4;animation:snap .35s}
+.prow.ok .pl,.prow.ok .pl:after{background:var(--green)}
+@keyframes snap{0%{transform:translateX(18px)}60%{transform:translateX(-3px)}100%{transform:none}}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.tray{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 4px;padding:12px;border-radius:12px;border:1.5px dashed #c7d0db;min-height:70px}
+.tray .tl{width:100%;font-family:Arial,sans-serif;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#8a8f98;font-weight:700}
+.piece{position:relative;background:#fffaf0;border:2px solid var(--gold);border-radius:9px;padding:9px 13px 9px 22px;font-size:13.5px;line-height:1.4;max-width:310px;cursor:grab;user-select:none;touch-action:none;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.piece:before{content:"";position:absolute;left:-2px;top:50%;width:20px;height:22px;margin-top:-11px;border-radius:0 50% 50% 0;background:#fff;border:2px solid var(--gold);border-left:none}
+.piece.sel{outline:3px solid var(--navy-light);outline-offset:2px}
+.piece.ghost{position:fixed;z-index:999;pointer-events:none;opacity:.92;box-shadow:0 10px 26px rgba(0,0,0,.25);transform:rotate(-2deg)}
+.piece.drag-src{opacity:.3}
+.pmsg{font-family:Arial,sans-serif;font-size:13px;min-height:20px;margin:6px 0;color:var(--navy)}
+.pmsg.good{color:var(--green);font-weight:700}
+.pmsg.bad{color:var(--red)}
+.after{display:none;margin-top:14px}
+.after.on{display:block;animation:fade .4s}
+/* detail scene */
+.scene{position:relative;border-radius:14px;overflow:hidden;margin-bottom:12px;background:linear-gradient(#cfe1f2,#eef5fb 55%,#9fc0dc 56%,#7aa6cc)}
+.scene svg{display:block;width:100%;height:auto}
+.hs{position:absolute;transform:translate(-50%,-50%);background:var(--gold);color:#fff;border:3px solid #fff;border-radius:999px;font-family:Arial,sans-serif;font-size:12px;font-weight:700;padding:6px 12px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2);animation:pulse 2s infinite}
+.hs.seen{background:var(--green);animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,134,11,.5)}50%{box-shadow:0 0 0 9px rgba(184,134,11,0)}}
+.dpanel{display:none;border:1.5px solid var(--navy-light);border-radius:10px;padding:12px 16px;background:var(--blue-bg);margin-bottom:14px}
+.dpanel.on{display:block;animation:fade .3s}
+.dpanel h4{margin:0 0 6px;color:var(--navy);font-size:16px}
+.dans{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px}
+.dans div{font-family:Arial,sans-serif;font-size:12px;color:#555;background:#fafbfc;border:1px solid #e6e9ee;border-radius:8px;padding:7px 10px}
+.dans b{color:var(--navy)}
+/* motif cards */
+.motifs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.motif{border:1.5px solid #e2e5ea;border-left:5px solid var(--purple);border-radius:10px;padding:11px 14px;background:#fff}
+.motif .mt{font-weight:700;color:var(--purple-text);margin-bottom:6px}
+.motif textarea{min-height:52px;font-size:13.5px}
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.quote{background:var(--blue-bg);border-left:4px solid var(--navy-light);border-radius:8px;padding:12px 14px;font-style:italic;font-size:14px;line-height:1.45;color:#1a3550}
+.quote cite{display:block;font-style:normal;font-family:Arial,sans-serif;font-size:11.5px;color:var(--navy-light);margin-top:6px}
+.summary{font-family:Arial,sans-serif;font-size:13.5px}
+.summary .row{display:flex;justify-content:space-between;border-bottom:1px solid #eef0f3;padding:8px 2px}
+.summary .row b{color:var(--navy)}
+.summary .yes{color:var(--green);font-weight:700}
+.summary .no{color:#b0b6bd}
+.footer{margin:34px 40px 0;padding-top:12px;border-top:1px solid #e2e5ea;text-align:center;font-family:Arial,sans-serif;font-size:10.5px;letter-spacing:.04em;color:#9aa0a8;text-transform:uppercase}
+@media(max-width:760px){header,section.step{padding-left:16px;padding-right:16px}nav{padding:10px 16px}.bar{margin:0 16px}.flips,.quotes,.motifs{grid-template-columns:1fr}.arena{grid-template-columns:1fr}.ring.left,.ring.right,.ring.top,.ring.bottom{grid-column:auto;justify-content:center}.prow{grid-template-columns:120px 1fr}}
+@media print{nav,.bar,.nextrow,.adder,.tray,.who-switch,.hs{display:none!important}section.step{display:block!important;page-break-after:always}.page{box-shadow:none}body{background:#fff}.after{display:block}}
+</style></head>
+<body><div class="page">
+<header>
+ <div class="bc">Pre-IB · Модуль «Цена свободы» · А. Н. Островский · «Бесприданница» · 9–10 классы</div>
+ <div class="hm"><h1><small>Действие I · интерактивный урок</small>Дополнительные задания к действию I</h1>
+ <label class="who">Имя: <input type="text" data-k="name" placeholder="Имя и фамилия"></label></div>
+</header>
+<nav id="nav"></nav><div class="bar"><i id="bar"></i></div>
+
+<!-- Д1 -->
+<section class="step" data-t="Название" data-n="Д1">
+ <div class="sh"><span class="sn">Д1</span><span class="st">Название пьесы</span></div>
+ <div class="q"><div class="qn">1</div><div>Какие слова-ассоциации вызывает у тебя слово <b>«бесприданница»</b>? Добавляй по одному.</div></div>
+ <div class="adder"><input type="text" id="assocIn" placeholder="Например: бедность…"><button class="btn sm" onclick="addChip('assoc','assocIn')">Добавить</button></div>
+ <div class="cloud" id="assoc"><span class="empty">Здесь появятся твои ассоциации</span></div>
+ <p class="ins" style="margin-top:16px">Теперь сравни свои ассоциации со словарём.</p>
+ <div class="reveal" id="dal" onclick="openDal()"><span class="ic">📖</span><span>Нажми, чтобы открыть статью из словаря В. И. Даля</span></div>
+ <div class="q"><div class="qn">2</div><div>Используя свои ассоциации и определение слова, напиши небольшой текст: чем незавидна судьба бесприданницы?</div></div>
+ <textarea data-k="q2" rows="4"></textarea>
+ <div class="q"><div class="qn">3</div><div>Какой конфликт заложен в названии пьесы? Если бы он был только социальным, как он мог бы разрешиться? Выдвини гипотезу.</div></div>
+ <textarea data-k="q3" rows="3"></textarea>
+</section>
+
+<!-- Д2 -->
+<section class="step" data-t="Имена" data-n="Д2">
+ <div class="sh"><span class="sn">Д2</span><span class="st">Афиша и «говорящие» имена</span></div>
+ <p class="ins">Переверни карточку. Прочитай значение имени и запиши, <b>что оно подсказывает о персонаже</b> ещё до начала действия.</p>
+ <div class="flips" id="flips"></div>
+ <div class="q"><div class="qn">4</div><div>Почему, как ты думаешь, героиня названа в афише без фамилии?</div></div>
+ <textarea data-k="q4" rows="2"></textarea>
+ <div class="box amber"><span class="ey">Ремарки афиши</span>Лариса — «одета богато, но скромно»; её мать — «одета изящно, но смело и не по летам».</div>
+ <div class="q"><div class="qn">5</div><div>Какова роль этого противопоставления?</div></div>
+ <textarea data-k="q5" rows="3"></textarea>
+</section>
+
+<!-- Д3 PUZZLE -->
+<section class="step" data-t="Пазл: купцы" data-n="Д3">
+ <div class="sh"><span class="sn">Д3</span><span class="st">Явление 2: Кнуров и Вожеватов — собери пазл</span></div>
+ <p class="ins">Слева — <b>приёмы раскрытия характера</b>, справа — <b>цитаты и наблюдения</b> из текста. Перетащи каждый кусочек к нужному приёму (или нажми на кусочек, а затем на пустое место). Когда пазл сложится, впиши вокруг него <b>собственные характеристики</b> персонажа.</p>
+ <div class="who-switch" id="whoSw"></div>
+ <div class="arena" id="arena">
+  <div class="ring top" id="ring-top"></div>
+  <div class="ring left" id="ring-left"></div>
+  <div class="board"><div class="bt" id="boardT"></div><div id="board"></div></div>
+  <div class="ring right" id="ring-right"></div>
+  <div class="ring bottom" id="ring-bottom"></div>
+ </div>
+ <div class="pmsg" id="pmsg"></div>
+ <div class="after" id="after">
+  <div class="box purple"><span class="ey">Пазл сложился!</span>Какой он, этот человек? Добавляй свои характеристики — они встанут вокруг пазла. Старайся опираться на собранные доказательства.</div>
+  <div class="adder"><input type="text" id="charIn" placeholder="Например: надменный, расчётливый…"><button class="btn sm gold" onclick="addRing()">Добавить характеристику</button></div>
+ </div>
+ <div class="tray" id="tray"><div class="tl">Кусочки пазла — оба персонажа вперемешку</div></div>
+ <div class="q"><div class="qn">6</div><div>Каковы взаимоотношения между купцами? Почему Вожеватов отвечает уклончиво, когда Кнуров расспрашивает его о покупке парохода?</div></div>
+ <textarea data-k="q6" rows="3"></textarea>
+ <div class="q"><div class="qn">7</div><div>Как характеризует Кнурова и Вожеватова их отношение к Ларисе?</div></div>
+ <textarea data-k="q7" rows="3"></textarea>
+</section>
+
+<!-- Д4 -->
+<section class="step" data-t="Экспозиция" data-n="Д4">
+ <div class="sh"><span class="sn">Д4</span><span class="st">Экспозиция, которая предсказывает</span></div>
+ <div class="box amber"><span class="ey">Обрати внимание</span>Экспозиция «Бесприданницы» не только знакомит с тем, что уже произошло, но и предваряет будущие события.</div>
+ <div class="q"><div class="qn">8</div><div>Найди в первом действии детали, которые как будто предсказывают судьбу Ларисы (например, рассказ о судьбе её сестёр).</div></div>
+ <textarea data-k="q8" rows="3"></textarea>
+ <p class="ins" style="margin-top:16px">Первое действие определяет <b>мотивы</b>, которые прозвучат в следующих сценах. Где каждый из них появляется в действии I и что может значить?</p>
+ <div class="motifs" id="motifs"></div>
+</section>
+
+<!-- Д5 -->
+<section class="step" data-t="Деталь" data-n="Д5">
+ <div class="sh"><span class="sn">Д5</span><span class="st">Явления 3–4: художественная деталь</span></div>
+ <div class="box blue"><span class="ey">Термин</span><b>Художественная деталь</b> — изобразительная и выразительная подробность, несущая эмоциональную и содержательную нагрузку; важна для раскрытия характеров персонажей и для самого действия пьесы.</div>
+ <p class="ins">Нажимай на метки в сцене. Для каждой детали ответь: <b>что она говорит о Ларисе и её месте в этом мире?</b></p>
+ <div class="scene" id="scene">
+  <svg viewBox="0 0 900 340" preserveAspectRatio="none">
+   <path d="M0 190 Q120 175 240 188 T480 186 T720 190 T900 184 L900 340 L0 340Z" fill="#6f9cc4"/>
+   <path d="M0 206 Q80 200 160 206 T320 205 T480 207 T640 204 T800 207 T900 205" stroke="#cfe0ef" stroke-width="2" fill="none" opacity=".7"/>
+   <path d="M0 232 Q90 226 180 232 T360 231 T540 233 T720 230 T900 232" stroke="#cfe0ef" stroke-width="2" fill="none" opacity=".5"/>
+   <path d="M520 186 L560 178 L640 176 L700 182 Z" fill="#8aa889" opacity=".8"/>
+   <g transform="translate(640,150)"><rect x="0" y="16" width="70" height="12" rx="3" fill="#2d4a6b"/><rect x="18" y="4" width="10" height="14" fill="#2d4a6b"/><rect x="34" y="0" width="8" height="18" fill="#2d4a6b"/><circle cx="60" cy="-6" r="10" fill="#fff" opacity=".85"/><circle cx="72" cy="-14" r="7" fill="#fff" opacity=".7"/></g>
+   <rect x="0" y="262" width="900" height="78" fill="#d9c9a6"/>
+   <g stroke="#2a2a2a" stroke-width="4"><line x1="0" y1="250" x2="900" y2="250"/><line x1="0" y1="300" x2="900" y2="300"/></g>
+   <g stroke="#2a2a2a" stroke-width="3">
+    <line x1="30" y1="244" x2="30" y2="320"/><line x1="70" y1="244" x2="70" y2="320"/><line x1="110" y1="244" x2="110" y2="320"/><line x1="150" y1="244" x2="150" y2="320"/><line x1="190" y1="244" x2="190" y2="320"/><line x1="230" y1="244" x2="230" y2="320"/><line x1="270" y1="244" x2="270" y2="320"/><line x1="310" y1="244" x2="310" y2="320"/><line x1="350" y1="244" x2="350" y2="320"/><line x1="390" y1="244" x2="390" y2="320"/><line x1="430" y1="244" x2="430" y2="320"/><line x1="470" y1="244" x2="470" y2="320"/><line x1="510" y1="244" x2="510" y2="320"/><line x1="550" y1="244" x2="550" y2="320"/><line x1="590" y1="244" x2="590" y2="320"/><line x1="630" y1="244" x2="630" y2="320"/><line x1="670" y1="244" x2="670" y2="320"/><line x1="710" y1="244" x2="710" y2="320"/><line x1="750" y1="244" x2="750" y2="320"/><line x1="790" y1="244" x2="790" y2="320"/><line x1="830" y1="244" x2="830" y2="320"/><line x1="870" y1="244" x2="870" y2="320"/>
+   </g>
+   <g transform="translate(200,206)" fill="#1e3a5f"><rect x="0" y="6" width="22" height="16" rx="5"/><rect x="28" y="6" width="22" height="16" rx="5"/><rect x="18" y="10" width="14" height="6"/></g>
+  </svg>
+  <button class="hs" style="left:23%;top:58%" data-d="0">бинокль</button>
+  <button class="hs" style="left:50%;top:84%" data-d="1">решётка</button>
+  <button class="hs" style="left:38%;top:40%" data-d="2">Волга, «за Волгу»</button>
+  <button class="hs" style="left:12%;top:22%" data-d="3">первые слова Ларисы</button>
+  <button class="hs" style="left:78%;top:30%" data-d="4">выстрел пушки</button>
+ </div>
+ <div class="dpanel" id="dpanel"><h4 id="dTitle"></h4><div class="ins" id="dHint" style="margin-bottom:8px"></div><textarea id="dText" rows="3"></textarea></div>
+ <div class="dans" id="dans"></div>
+ <div class="q"><div class="qn">9</div><div>Почему Лариса выходит за Карандышева? Почему она стремится в деревню, «за Волгу»?</div></div>
+ <textarea data-k="q9" rows="3"></textarea>
+ <div class="q"><div class="qn">10</div><div>Какое событие первого действия даёт толчок всему действию (завязка)?</div></div>
+ <textarea data-k="q10" rows="2"></textarea>
+</section>
+
+<!-- Д6 -->
+<section class="step" data-t="Паратов" data-n="Д6">
+ <div class="sh"><span class="sn">Д6</span><span class="st">Паратов: идеал и оригинал</span></div>
+ <p class="ins">Каким видит Паратова Лариса — и каков он на самом деле? Собери второй пазл: соедини <b>черту идеала</b> с тем, что обнаруживают <b>поступки</b> героя.</p>
+ <div class="board" style="max-width:720px"><div class="bt">Идеал → оригинал</div><div id="board2"></div></div>
+ <div class="pmsg" id="pmsg2"></div>
+ <div class="tray" id="tray2"><div class="tl">Кусочки пазла</div></div>
+ <div class="quotes">
+  <div class="quote">«Сердца нет, оттого он так и смел».<cite>Карандышев</cite></div>
+  <div class="quote">«Что такое „жаль“, этого я не знаю. У меня, Мокий Парменыч, ничего заветного нет; найду выгоду, так всё продам, что угодно».<cite>Паратов</cite></div>
+  <div class="quote">«Да, господа, жизнь коротка, говорят философы, так надо уметь ею пользоваться».<cite>Паратов</cite></div>
+ </div>
+ <div class="q"><div class="qn">11</div><div>Как характеризует Паратова история с пари, о которой Лариса рассказывает Карандышеву? Согласен (согласна) ли ты с Карандышевым?</div></div>
+ <textarea data-k="q11" rows="3"></textarea>
+ <div class="q"><div class="qn">12</div><div>Что сближает Ларису и «Ласточку»? Вспомни значение имени героини.</div></div>
+ <textarea data-k="q12" rows="2"></textarea>
+ <div class="q"><div class="qn">13</div><div>Финал действия: как Паратов реагирует на известие о замужестве Ларисы? О чём говорят умолчания в его речи? Что объединяет его с Кнуровым и Вожеватовым?</div></div>
+ <textarea data-k="q13" rows="3"></textarea>
+</section>
+
+<!-- END -->
+<section class="step" data-t="Итог" data-n="✓">
+ <div class="sh"><span class="sn">✓</span><span class="st">Итог урока</span></div>
+ <div class="summary" id="summary"></div>
+ <div class="box blue" style="margin-top:18px"><span class="ey">Сохранить работу</span>Ответы сохраняются в этом браузере автоматически. Чтобы сдать работу, скачай файл с ответами или распечатай урок (в PDF).</div>
+ <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="exportTxt()">Скачать мои ответы</button><button class="btn ghost" onclick="window.print()">Распечатать / PDF</button><button class="btn ghost" onclick="resetAll()">Начать заново</button></div>
+</section>
+
+<div class="footer">А. Н. Островский · «Бесприданница» · Действие I · Интерактивный урок · Модуль «Цена свободы» · Pre-IB 9–10</div>
+</div>
+
+<script>
+/* ---------- data ---------- */
+const NAMES=[
+ ['Лариса','лат. и др.-греч. <i>larus</i> — чайка'],
+ ['Кнуров','диал. <i>кнур</i> — боров, хряк, кабан'],
+ ['Паратов','<i>поратый</i> — бойкий, дюжий, сильный, усердный'],
+ ['Вожеватов','<i>вожеватый</i> (народ) — развязный, беспардонный'],
+ ['Харита Игнатьевна Огудалова','хариты (греч. <i>харис</i> — изящество, прелесть) — так называли цыганок из хора; Игнатами в Москве называли цыган; <i>огудать</i> — обмануть, обольстить, надуть'],
+ ['Юлий Капитоныч Карандышев','Юлий — имя Цезаря; Капитон — от лат. «голова»; <i>карандыш</i> — недоросток, коротышка, человек с непомерными претензиями']];
+const PZ={
+ K:{title:'Кнуров',rows:[
+  ['fam','«Говорящая» фамилия','диал. «кнур» — боров, хряк, кабан'],
+  ['man','Манера поведения (ремарки)','Поклонов Гаврилы и Ивана просто не замечает; при встрече с Вожеватовым ограничивается рукопожатием'],
+  ['act','Поступки','Читает французскую газету, собирается на выставку в Париж'],
+  ['oth','Характеристика другими','«Как же ты хочешь, чтобы он разговаривал, коли у него миллионы! С кем ему разговаривать?» (Гаврило)'],
+  ['sp','Речь','Сдержанная, немногословная, бесстрастная, сухая — почти без просторечий и образности'],
+  ['lar','Отношение к Ларисе','Жалеет её — и одновременно думает, как ещё больше усугубить положение «бедняжки»']]},
+ V:{title:'Вожеватов',rows:[
+  ['fam','«Говорящая» фамилия','«вожеватый» — развязный, беспардонный'],
+  ['man','Манера поведения (ремарки)','(смеётся) — рассказывая о грустной судьбе Ларисы'],
+  ['act','Поступки','При встрече почтительно кланяется Кнурову; покупает у Паратова пароход «Ласточку»'],
+  ['oth','Характеристика другими','«ещё молод», «разговорчив», «такой же идол будет»'],
+  ['self','Самохарактеристика','«Я хотя молод, а не зарвусь, лишнего не передам»'],
+  ['sp','Речь','Живая, непосредственная: просторечие, поговорки, пословицы, уменьшительно-ласкательные суффиксы']]},
+ P:{title:'Паратов',rows:[
+  ['g','Щедрый','мот: щедро платит цыганам, слугам, кучерам — все рады его приезду'],
+  ['b','Смелый','азартный игрок, идущий ва-банк: пари, о котором Лариса рассказывает Карандышеву'],
+  ['d','Добрый','спасает с острова только одного актёра — мотив человека-игрушки']]}};
+const MOTIFS=['Купля-продажа (Лариса — «Ласточка»)','Человек — вещь, товар, игрушка','Искушение (выставка в Париже, блеск)','Цыганский табор','Пространство: Волга, «за Волгу»'];
+const DETAILS=[
+ ['Бинокль','Лариса садится у решётки и смотрит за Волгу в бинокль. Куда направлен её взгляд? Что она ищет?'],
+ ['Решётка бульвара','Где Лариса находится? Что может означать решётка — граница, защита, клетка?'],
+ ['Волга, взгляд «за Волгу»','Мотив пространства, который продолжится в действии IV. Чего хочет Лариса, глядя вдаль? Тянется вдаль — но может ли пасть вниз?'],
+ ['Первые слова Ларисы','Её первые слова в пьесе — прощальные. Что это говорит о её состоянии?'],
+ ['Выстрел пушки','Так встречают приезд Паратова. С каким событием пьесы может перекликаться этот выстрел?']];
+
+/* ---------- state ---------- */
+const KEY='bespr_d1_lesson';let S={};
+try{S=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){S={}}
+S.chips=S.chips||{};S.placed=S.placed||{};S.det=S.det||{};S.flip=S.flip||{};S.mot=S.mot||{};S.ring=S.ring||{K:[],V:[]};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){};updNav()}
+document.querySelectorAll('[data-k]').forEach(el=>{el.value=S[el.dataset.k]||'';el.addEventListener('input',()=>{S[el.dataset.k]=el.value;save()})});
+
+/* ---------- nav ---------- */
+const steps=[...document.querySelectorAll('section.step')];let cur=0;
+const nav=document.getElementById('nav');
+steps.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML='<span class="n">'+s.dataset.n+'</span>'+s.dataset.t;b.onclick=()=>go(i);nav.appendChild(b);
+ if(i<steps.length-1){const r=document.createElement('div');r.className='nextrow';r.innerHTML=(i>0?'<button class="btn ghost">← Назад</button>':'<span></span>')+'<button class="btn">Дальше →</button>';const bs=r.querySelectorAll('button');if(i>0){bs[0].onclick=()=>go(i-1);bs[1].onclick=()=>go(i+1)}else bs[0].onclick=()=>go(i+1);s.appendChild(r)}});
+function go(i){cur=i;steps.forEach((s,j)=>s.classList.toggle('on',j===i));[...nav.children].forEach((b,j)=>b.classList.toggle('on',j===i));if(i===steps.length-1)renderSummary();window.scrollTo({top:0,behavior:'smooth'});updNav()}
+function stepDone(i){const t=steps[i].dataset.n;
+ const filled=k=>(S[k]||'').trim().length>0;
+ if(t==='Д1')return (S.chips.assoc||[]).length>0&&filled('q2')&&filled('q3');
+ if(t==='Д2')return Object.keys(S.flip).length>=6&&filled('q4')&&filled('q5');
+ if(t==='Д3')return pzDone('K')&&pzDone('V')&&filled('q6')&&filled('q7');
+ if(t==='Д4')return filled('q8')&&Object.values(S.mot).filter(v=>v.trim()).length>=3;
+ if(t==='Д5')return Object.values(S.det).filter(v=>v.trim()).length>=5&&filled('q9')&&filled('q10');
+ if(t==='Д6')return pzDone('P')&&filled('q11')&&filled('q12')&&filled('q13');
+ return false}
+function updNav(){let d=0;[...nav.children].forEach((b,i)=>{const ok=i<steps.length-1&&stepDone(i);b.classList.toggle('done',ok);if(ok)d++});document.getElementById('bar').style.width=(d/(steps.length-1)*100)+'%'}
+
+/* ---------- chips ---------- */
+function renderChips(id){const c=document.getElementById(id);const arr=S.chips[id]||[];c.innerHTML=arr.length?'':'<span class="empty">Здесь появятся твои ассоциации</span>';
+ arr.forEach((w,i)=>{const s=document.createElement('span');s.className='chip';s.textContent=w;const x=document.createElement('button');x.textContent='×';x.onclick=()=>{arr.splice(i,1);save();renderChips(id)};s.appendChild(x);c.appendChild(s)})}
+function addChip(id,inp){const el=document.getElementById(inp);const v=el.value.trim();if(!v)return;(S.chips[id]=S.chips[id]||[]).push(v);el.value='';save();renderChips(id);el.focus()}
+document.getElementById('assocIn').addEventListener('keydown',e=>{if(e.key==='Enter')addChip('assoc','assocIn')});
+renderChips('assoc');
+function openDal(){const d=document.getElementById('dal');if(d.classList.contains('open'))return;d.classList.add('open');d.innerHTML='<span class="ic">📖</span><span><b>Бесприданница</b> — бесприданная невеста, бедная, у которой ничего нет. Девушка, которую берут замуж, не требуя приданого, за красоту и достоинства её.<br><i style="color:#3b6ea5">Толковый словарь В. И. Даля</i></span>';S.dal=1;save()}
+if(S.dal)openDal();
+
+/* ---------- flip cards ---------- */
+const fl=document.getElementById('flips');
+NAMES.forEach(([n,m],i)=>{const d=document.createElement('div');d.className='flip'+(S.flip[i]?' on':'');
+ d.innerHTML='<div class="in"><div class="f"><div class="nm">'+n+'</div><div class="hint">нажми, чтобы перевернуть</div></div><div class="b"><div class="nm">'+n+'</div><div>'+m+'</div><input type="text" placeholder="Что это подсказывает?"></div></div>';
+ const inp=d.querySelector('input');inp.value=S['name'+i]||'';inp.onclick=e=>e.stopPropagation();inp.oninput=()=>{S['name'+i]=inp.value;save()};
+ d.onclick=()=>{d.classList.toggle('on');S.flip[i]=1;save()};fl.appendChild(d)});
+
+/* ---------- motifs ---------- */
+const mo=document.getElementById('motifs');
+MOTIFS.forEach((m,i)=>{const d=document.createElement('div');d.className='motif';d.innerHTML='<div class="mt">'+m+'</div><textarea rows="2" placeholder="Где появляется в действии I? Что может значить?"></textarea>';const t=d.querySelector('textarea');t.value=S.mot[i]||'';t.oninput=()=>{S.mot[i]=t.value;save()};mo.appendChild(d)});
+
+/* ---------- details ---------- */
+let dcur=null;const dp=document.getElementById('dpanel'),dt=document.getElementById('dText');
+document.querySelectorAll('.hs').forEach(b=>{const i=+b.dataset.d;if((S.det[i]||'').trim())b.classList.add('seen');
+ b.onclick=()=>{dcur=i;dp.classList.add('on');document.getElementById('dTitle').textContent=DETAILS[i][0];document.getElementById('dHint').textContent=DETAILS[i][1];dt.value=S.det[i]||'';dt.focus()}});
+dt.oninput=()=>{if(dcur===null)return;S.det[dcur]=dt.value;document.querySelector('.hs[data-d="'+dcur+'"]').classList.toggle('seen',!!dt.value.trim());save();renderDans()};
+function renderDans(){document.getElementById('dans').innerHTML=DETAILS.map((d,i)=>(S.det[i]||'').trim()?'<div><b>'+d[0]+':</b> '+esc(S.det[i])+'</div>':'').join('')}
+renderDans();
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+
+/* ---------- puzzle engine ---------- */
+function pzDone(who){return PZ[who].rows.every(r=>S.placed[who+'_'+r[0]])}
+let selPiece=null;
+function makePiece(who,rid,txt,trayEl,onPlaced){const p=document.createElement('div');p.className='piece';p.dataset.id=who+'_'+rid;p.innerHTML=txt;trayEl.appendChild(p);
+ let sx,sy,ghost=null,moved=false;
+ p.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY;moved=false;p.setPointerCapture(e.pointerId)});
+ p.addEventListener('pointermove',e=>{if(sx===undefined)return;if(!moved&&Math.hypot(e.clientX-sx,e.clientY-sy)>6){moved=true;ghost=p.cloneNode(true);ghost.classList.add('ghost');ghost.style.width=p.offsetWidth+'px';document.body.appendChild(ghost);p.classList.add('drag-src')}
+  if(moved){autoScroll(e.clientY);ghost.style.left=(e.clientX-20)+'px';ghost.style.top=(e.clientY-20)+'px';document.querySelectorAll('.slot').forEach(s=>s.classList.remove('hot'));const s=slotAt(e.clientX,e.clientY);if(s)s.classList.add('hot')}});
+ p.addEventListener('pointerup',e=>{clearInterval(asT);if(sx===undefined)return;sx=undefined;
+  if(moved){ghost.remove();ghost=null;p.classList.remove('drag-src');document.querySelectorAll('.slot').forEach(s=>s.classList.remove('hot'));const s=slotAt(e.clientX,e.clientY);if(s)tryPlace(p,s,onPlaced)}
+  else{document.querySelectorAll('.piece.sel').forEach(x=>x!==p&&x.classList.remove('sel'));p.classList.toggle('sel');selPiece=p.classList.contains('sel')?p:null}});
+ p.addEventListener('pointercancel',()=>{sx=undefined;if(ghost){ghost.remove();ghost=null}p.classList.remove('drag-src')});
+ return p}
+let asT=null;function autoScroll(y){clearInterval(asT);const m=70;let d=0;if(y<m)d=-14;else if(y>innerHeight-m)d=14;if(d)asT=setInterval(()=>window.scrollBy(0,d),16)}
+function slotAt(x,y){const el=document.elementFromPoint(x,y);return el?el.closest('.slot:not(.filled)'):null}
+function tryPlace(p,slot,onPlaced){const msgEl=document.getElementById(slot.dataset.msg);
+ if(p.dataset.id===slot.dataset.id){fillSlot(slot,p.innerHTML);S.placed[p.dataset.id]=1;p.remove();selPiece=null;save();msgEl.className='pmsg good';msgEl.textContent='✓ Верно! Кусочки сошлись.';onPlaced&&onPlaced()}
+ else{const [w]=p.dataset.id.split('_');const [ws]=slot.dataset.id.split('_');msgEl.className='pmsg bad';
+  msgEl.textContent=(w!==ws&&slot.dataset.id.split('_')[0]!=='P')?'Не сходится: этот кусочек про другого персонажа.':'Не сходится. Подумай, какой приём здесь работает.';
+  slot.classList.add('shake');p.classList.add('shake');setTimeout(()=>{slot.classList.remove('shake');p.classList.remove('shake')},400)}}
+function fillSlot(slot,html){slot.classList.add('filled');slot.innerHTML=html;slot.closest('.prow').classList.add('ok')}
+function buildBoard(who,boardEl,msgId){boardEl.innerHTML='';PZ[who].rows.forEach(r=>{const row=document.createElement('div');row.className='prow';
+ row.innerHTML='<div class="pl">'+r[1]+'</div><div class="slot" data-id="'+who+'_'+r[0]+'" data-msg="'+msgId+'">перетащи сюда кусочек</div>';
+ const slot=row.querySelector('.slot');if(S.placed[who+'_'+r[0]])fillSlot(slot,r[2]);
+ slot.addEventListener('click',()=>{if(selPiece&&!slot.classList.contains('filled'))tryPlace(selPiece,slot,()=>afterPlace(who))});boardEl.appendChild(row)})}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+/* merchants puzzle */
+let who='K';const tray=document.getElementById('tray');
+const sw=document.getElementById('whoSw');
+function renderSw(){sw.innerHTML='';['K','V'].forEach(w=>{const b=document.createElement('button');b.className=w===who?'on':'';b.innerHTML=PZ[w].title+(pzDone(w)?'<span class="ok">✓</span>':'');b.onclick=()=>{who=w;renderMerchants()};sw.appendChild(b)})}
+function renderMerchants(){renderSw();document.getElementById('boardT').textContent=PZ[who].title;buildBoard(who,document.getElementById('board'),'pmsg');renderRing();document.getElementById('after').classList.toggle('on',pzDone(who))}
+const pieces=[];['K','V'].forEach(w=>PZ[w].rows.forEach(r=>{if(!S.placed[w+'_'+r[0]])pieces.push([w,r[0],r[2]])}));
+shuffle(pieces).forEach(([w,id,t])=>makePiece(w,id,t,tray,()=>afterPlace(w)));
+function afterPlace(w){renderSw();if(PZ[w].rows&&w!=='P'&&pzDone(w)){if(w!==who){who=w;renderMerchants()}document.getElementById('after').classList.add('on');document.getElementById('pmsg').textContent='🎉 Пазл «'+PZ[w].title+'» сложился! Теперь добавь свои характеристики вокруг него.';}
+ if(w==='P'&&pzDone('P'))document.getElementById('pmsg2').textContent='🎉 Идеал и оригинал соединились. Что ты теперь думаешь о Паратове?';updNav()}
+const RINGS=['top','right','bottom','left'];
+function renderRing(){RINGS.forEach(r=>document.getElementById('ring-'+r).innerHTML='');(S.ring[who]||[]).forEach((w,i)=>{const s=document.createElement('span');s.className='chip';s.textContent=w;const x=document.createElement('button');x.textContent='×';x.onclick=()=>{S.ring[who].splice(i,1);save();renderRing()};s.appendChild(x);document.getElementById('ring-'+RINGS[i%4]).appendChild(s)})}
+function addRing(){const el=document.getElementById('charIn');const v=el.value.trim();if(!v)return;S.ring[who].push(v);el.value='';save();renderRing();el.focus()}
+document.getElementById('charIn').addEventListener('keydown',e=>{if(e.key==='Enter')addRing()});
+renderMerchants();
+
+/* Paratov puzzle */
+buildBoard('P',document.getElementById('board2'),'pmsg2');
+const tray2=document.getElementById('tray2');
+shuffle(PZ.P.rows.filter(r=>!S.placed['P_'+r[0]]).map(r=>r)).forEach(r=>makePiece('P',r[0],r[2],tray2,()=>afterPlace('P')));
+document.querySelectorAll('#board2 .slot').forEach(s=>{const c=s.cloneNode(true);s.replaceWith(c);c.addEventListener('click',()=>{if(selPiece&&!c.classList.contains('filled'))tryPlace(selPiece,c,()=>afterPlace('P'))})});
+
+/* ---------- summary / export ---------- */
+function renderSummary(){const rows=steps.slice(0,-1).map((s,i)=>'<div class="row"><span><b>'+s.dataset.n+'</b> · '+s.dataset.t+'</span><span class="'+(stepDone(i)?'yes">выполнено ✓':'no">не завершено')+'</span></div>').join('');
+ document.getElementById('summary').innerHTML=rows}
+function exportTxt(){const L=[];L.push('«Бесприданница» · Действие I · Интерактивный урок');L.push('Имя: '+(S.name||''));L.push('');
+ L.push('Д1. Ассоциации: '+(S.chips.assoc||[]).join(', '));L.push('2. '+(S.q2||''));L.push('3. '+(S.q3||''));L.push('');
+ L.push('Д2. Имена:');NAMES.forEach((n,i)=>L.push('  '+n[0]+': '+(S['name'+i]||'')));L.push('4. '+(S.q4||''));L.push('5. '+(S.q5||''));L.push('');
+ L.push('Д3. Пазл Кнуров: '+(pzDone('K')?'собран':'не собран')+'; Вожеватов: '+(pzDone('V')?'собран':'не собран'));
+ L.push('  Характеристики Кнурова: '+(S.ring.K||[]).join(', '));L.push('  Характеристики Вожеватова: '+(S.ring.V||[]).join(', '));
+ L.push('6. '+(S.q6||''));L.push('7. '+(S.q7||''));L.push('');
+ L.push('Д4. 8. '+(S.q8||''));MOTIFS.forEach((m,i)=>L.push('  '+m+': '+(S.mot[i]||'')));L.push('');
+ L.push('Д5. Детали:');DETAILS.forEach((d,i)=>L.push('  '+d[0]+': '+(S.det[i]||'')));L.push('9. '+(S.q9||''));L.push('10. '+(S.q10||''));L.push('');
+ L.push('Д6. Пазл «Идеал и оригинал»: '+(pzDone('P')?'собран':'не собран'));L.push('11. '+(S.q11||''));L.push('12. '+(S.q12||''));L.push('13. '+(S.q13||''));
+ const blob=new Blob([L.join('\n')],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Бесприданница_Д1_'+((S.name||'ответы').replace(/\s+/g,'_'))+'.txt';document.body.appendChild(a);a.click();a.remove()}
+function resetAll(){if(!confirm('Стереть все ответы и начать заново?'))return;try{localStorage.removeItem(KEY)}catch(e){}location.reload()}
+go(0);
+</script>
+</body></html>
